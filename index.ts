@@ -77,10 +77,13 @@ const main = async () => {
   );
   const tokenBalance = await contract.erc20.balance();
   console.log("ERC20 token balance:", tokenBalance.displayValue);
+  
   const tx:Transaction = await contract.erc20.claim.prepare(1);
   console.log("Gas coast: ", (await tx.estimateGasCost()).ether);
+
   const batchTxs:Transaction[] = [tx, tx, tx];
-  const executeTx = await smartWallet.execute(batchTxs);
+
+  const executeTx = await smartWallet.executeBatch(batchTxs);
   // console.log("Claimed 1 ERC20 token, tx hash:", executeTx.receipt.transactionHash);
 };
 
